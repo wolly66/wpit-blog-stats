@@ -4,7 +4,7 @@ Donate link: no link
 Tags: stats
 Requires at least: 4.1
 Tested up to: 4.4
-Stable tag: 1.0
+Stable tag: 1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -19,6 +19,8 @@ With this plugin you can publish years stats about your blog:
 *Avg Comments 	
 *Tot Comments
 
+If you want to contribute to this project here is the github repository: https://github.com/wolly66/wpit-blog-stats
+
 
 == Installation ==
 
@@ -28,16 +30,30 @@ With this plugin you can publish years stats about your blog:
 
 == Frequently Asked Questions ==
 * Why use this plugin?
+
+To show stats of your website
+
 * How To show stats in posts or pages
+
+Insert the shortcode or shortcodes in a page or in a post.
+
+* Where I found the shortcode?
+
+In backend, under Settings menu you will find the Wpit Stat Settings menu.
 
 == Screenshots ==
 
 1. Stats render in a post or page
-2. Backend, first run, so yet stats
+2. Backend, first run, not yet stats
 3. Backend, after stats creation.
 4. Backend, new year, stats for new year missing, not yet created
 
 == Changelog ==
+
+=1.1=
+* added correct localization
+* some typo correct
+
 =1.0= 
 * first release
 
@@ -46,7 +62,7 @@ With this plugin you can publish years stats about your blog:
 
 Make a database backup, before updating
 
-== Arbitrary section ==
+== To do list ==
 
 TO DO LIST
 

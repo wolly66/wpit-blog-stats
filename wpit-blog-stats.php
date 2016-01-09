@@ -4,8 +4,10 @@ Plugin Name: Wpit Blog Stats
 Plugin URI: http://paolovalenti.info/
 Description: Basic stats about your blog
 Author: wolly aka Paolo Valenti
-Version: 1.0
+Version: 1.1
 Author URI: http://paolovalenti.info
+Text Domain: wpitstats
+Domain Path: /languages
 */
 
 /*
@@ -30,7 +32,7 @@ Place, Suite 330, Boston, MA 02111-1307 USA
 
 define ( 'WPIT_BLOSTA_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define ( 'WPIT_BLOSTA_PLUGIN_SLUG', basename( dirname( __FILE__ ) ) );
-define ( 'WPIT_BLOSTA_PLUGIN_VERSION', '1.0' );
+define ( 'WPIT_BLOSTA_PLUGIN_VERSION', '1.1' );
 define ( 'WPIT_BLOSTA_PLUGIN_VERSION_NAME', 'wpit_blogstats_version' );
 
 
