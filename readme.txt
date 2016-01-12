@@ -4,7 +4,7 @@ Donate link: no link
 Tags: stats
 Requires at least: 4.1
 Tested up to: 4.4.1
-Stable tag: 1.2
+Stable tag: 1.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -49,6 +49,10 @@ In backend, under Settings menu you will find the Wpit Stat Settings menu.
 4. Backend, new year, stats for new year missing, not yet created
 
 == Changelog ==
+
+=1.3=
+
+* correct: This plugin is not properly prepared for localization.
 
 =1.2=
 * added decimal in comments avg

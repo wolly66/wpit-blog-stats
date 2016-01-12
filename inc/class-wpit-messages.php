@@ -42,7 +42,7 @@ if ( ! class_exists( Wpit_Messages ) ){
 
     	    <p><?php
 	    	    $wpit_blog_stats_admin_page = admin_url( 'options-general.php?page=wpit-stats-settings' );
-	    	    printf( __( 'There are no stats yet. <a href="%s">Please, click here to create stats</a>', 'wpitstats' ), $wpit_blog_stats_admin_page );
+	    	    printf( __( 'There are no stats yet. <a href="%s">Please, click here to create stats</a>', 'wpit-blog-stats' ), $wpit_blog_stats_admin_page );
 
 	    	     ?></p>
     	</div>
@@ -63,7 +63,7 @@ if ( ! class_exists( Wpit_Messages ) ){
 
     	    <p><?php
 	    	    $wpit_blog_stats_admin_page = admin_url( 'options-general.php?page=wpit-stats-settings' );
-	    	    printf( __( 'Please, you have to recreate stats in order to display decimal in average comments. <a href="%s"> click here</a>', 'wpitstats' ), $wpit_blog_stats_admin_page );
+	    	    printf( __( 'Please, you have to recreate stats in order to display decimal in average comments. <a href="%s"> click here</a>', 'wpit-blog-stats' ), $wpit_blog_stats_admin_page );
 
 	    	     ?></p>
     	</div>

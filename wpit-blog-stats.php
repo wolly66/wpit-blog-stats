@@ -4,9 +4,9 @@ Plugin Name: Wpit Blog Stats
 Plugin URI: http://paolovalenti.info/
 Description: Basic stats about your blog
 Author: wolly aka Paolo Valenti
-Version: 1.2
+Version: 1.3
 Author URI: http://paolovalenti.info
-Text Domain: wpitstats
+Text Domain: wpit-blog-stats
 Domain Path: /languages
 */
 
@@ -32,14 +32,14 @@ Place, Suite 330, Boston, MA 02111-1307 USA
 
 define ( 'WPIT_BLOSTA_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define ( 'WPIT_BLOSTA_PLUGIN_SLUG', basename( dirname( __FILE__ ) ) );
-define ( 'WPIT_BLOSTA_PLUGIN_VERSION', '1.2' );
+define ( 'WPIT_BLOSTA_PLUGIN_VERSION', '1.3' );
 define ( 'WPIT_BLOSTA_PLUGIN_VERSION_NAME', 'wpit_blogstats_version' );
 
 
 // Create text domain for localization purpose, po files must be in languages directory
 function wpit_stats_text_domain(){
 
-	load_plugin_textdomain('wpitstats', false, basename( dirname( __FILE__ ) ) . '/languages/' );
+	load_plugin_textdomain('wpit-blog-stats', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 
 }
 
@@ -275,7 +275,7 @@ class Wpit_Stats {
 		//create the html
         ?>
         <div class="wrap">
-            <h2><?php _e('Wpit Stats Settings - version: ', 'wpitstats' ) ?> <?php echo $this->plugin_version ; ?></h2>
+            <h2><?php _e('Wpit Stats Settings - version: ', 'wpit-blog-stats' ) ?> <?php echo $this->plugin_version ; ?></h2>
             <form method="post" action="">
 	            <?php wp_nonce_field( 'nonce_wpit_stats', 'nonce_wpit_stats' ); ?>
 	            <input type="hidden" id="check_stats" name="check_stats" value="create_stats" />
@@ -292,12 +292,12 @@ class Wpit_Stats {
 	                if ( is_array( $exist ) ){
 
 		                ?>
-		                <h3><?php echo __( 'There are stats for the following years: ', 'wpitstats') ?></h3>
+		                <h3><?php echo __( 'There are stats for the following years: ', 'wpit-blog-stats') ?></h3>
 
 		                <?php echo __( '<p>Use this shortcode in posts or pages, to show all years:
-<strong> [wpitstats year="all"]</strong></p>', 'wpitstats' ); ?>
+<strong> [wpitstats year="all"]</strong></p>', 'wpit-blog-stats' ); ?>
 
-						<?php echo __( '<p>Use the following shortcodes in posts or pages, to show stats for specific year.</p>', 'wpitstats' ); ?>
+						<?php echo __( '<p>Use the following shortcodes in posts or pages, to show stats for specific year.</p>', 'wpit-blog-stats' ); ?>
 
 		                <div id="years_list">
 
@@ -316,7 +316,7 @@ class Wpit_Stats {
 	                if ( is_array( $not_exist ) ){
 
 		                ?>
-		                <h3 class="stats_red"><?php echo __( 'There are NO stats for the following years, please create stats.', 'wpitstats') ?></h3>
+		                <h3 class="stats_red"><?php echo __( 'There are NO stats for the following years, please create stats.', 'wpit-blog-stats') ?></h3>
 
 		                <div id="years_no_list"><?php
 
@@ -339,9 +339,9 @@ class Wpit_Stats {
             </form>
             <?php
 
-	            echo __( '<h3>Help</h3>', 'wpitstats' );
+	            echo __( '<h3>Help</h3>', 'wpit-blog-stats' );
 
-	            echo __( '<p>You can copy the following code and then add to yours CSS theme, to have a responsive table or copy the sample.css that you can find in the css plugin directory</p>', 'wpitstats' );
+	            echo __( '<p>You can copy the following code and then add to yours CSS theme, to have a responsive table or copy the sample.css that you can find in the css plugin directory</p>', 'wpit-blog-stats' );
 
 	            echo '<code>/* div stats table container */</code><br /><code>.table-stats-responsive {width: 98%; padding-left: 10px;}</code><br /><code>/* table stats border style */</code><br /><code>.table-stats-responsive table {border: #ccc solid 1px;}</code><br /><code>/* th and td */</code><br /><code>.table-stats-responsive table td, .table-stats-responsive table th {min-width: 50px; width: 16.5%; border: #ccc solid 1px; word-break: break-all; text-align: center; padding: 1%;}</code>';
 
@@ -408,12 +408,12 @@ class Wpit_Stats {
 					<table>
 						<thead>
 		 				<tr>
-		 					<th>' . __('Year', 'wpitstats' ) . '</th>
-		 					<th>' . __('Nr. Post', 'wpitstats' ). '</th>
-		 					<th>' . __('Avg post character', 'wpitstats' ) . '</th>
-		 					<th>' . __('Tot post character', 'wpitstats' ) . '</th>
-		 					<th>' . __('Avg Comments', 'wpitstats' ) . '</th>
-		 					<th>' . __('Tot Comments', 'wpitstats' ) . '</th>
+		 					<th>' . __('Year', 'wpit-blog-stats' ) . '</th>
+		 					<th>' . __('Nr. Post', 'wpit-blog-stats' ). '</th>
+		 					<th>' . __('Avg post character', 'wpit-blog-stats' ) . '</th>
+		 					<th>' . __('Tot post character', 'wpit-blog-stats' ) . '</th>
+		 					<th>' . __('Avg Comments', 'wpit-blog-stats' ) . '</th>
+		 					<th>' . __('Tot Comments', 'wpit-blog-stats' ) . '</th>
 		 				</tr>
 		 				</thead>
 		 				<tbody>';
@@ -463,7 +463,7 @@ class Wpit_Stats {
 
 	} else {//close check if is array
 
-		return _e( 'Sorry, no data', 'wpitstats' );
+		return _e( 'Sorry, no data', 'wpit-blog-stats' );
 
 		}//close check if is array
 
