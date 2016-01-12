@@ -39,11 +39,12 @@ define ( 'WPIT_BLOSTA_PLUGIN_VERSION_NAME', 'wpit_blogstats_version' );
 // Create text domain for localization purpose, po files must be in languages directory
 function wpit_stats_text_domain(){
 
-	load_plugin_textdomain('wpitstats', false, basename( dirname( __FILE__ ) ) . '/languages' );
+	load_plugin_textdomain('wpitstats', false, basename( dirname( __FILE__ ) ) . '/languages/' );
 
 }
 
-add_action('init', 'wpit_stats_text_domain');
+
+add_action('plugins_loaded', 'wpit_stats_text_domain');
 
 include_once 'inc/class-wpit-messages.php';
 
