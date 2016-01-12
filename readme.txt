@@ -3,8 +3,8 @@ Contributors: wolly
 Donate link: no link
 Tags: stats
 Requires at least: 4.1
-Tested up to: 4.4
-Stable tag: 1.1
+Tested up to: 4.4.1
+Stable tag: 1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,10 +13,10 @@ This plugin allow you to insert in your posts or pages years stats, tot nr. of p
 
 With this plugin you can publish years stats about your blog:
 
-*Nr. Post 	
-*Avg post character 	
-*Tot post character 	
-*Avg Comments 	
+*Nr. Post
+*Avg post character
+*Tot post character
+*Avg Comments
 *Tot Comments
 
 If you want to contribute to this project here is the github repository: https://github.com/wolly66/wpit-blog-stats
@@ -50,11 +50,16 @@ In backend, under Settings menu you will find the Wpit Stat Settings menu.
 
 == Changelog ==
 
+=1.2=
+* added decimal in comments avg
+* updated italian translation
+* added admin notice
+
 =1.1=
 * added correct localization
 * some typo correct
 
-=1.0= 
+=1.0=
 * first release
 
 

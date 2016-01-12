@@ -32,19 +32,20 @@ Place, Suite 330, Boston, MA 02111-1307 USA
 
 define ( 'WPIT_BLOSTA_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define ( 'WPIT_BLOSTA_PLUGIN_SLUG', basename( dirname( __FILE__ ) ) );
-define ( 'WPIT_BLOSTA_PLUGIN_VERSION', '1.1' );
+define ( 'WPIT_BLOSTA_PLUGIN_VERSION', '1.2' );
 define ( 'WPIT_BLOSTA_PLUGIN_VERSION_NAME', 'wpit_blogstats_version' );
 
 
 // Create text domain for localization purpose, po files must be in languages directory
 function wpit_stats_text_domain(){
 
-load_plugin_textdomain('wpitstats', false, basename( dirname( __FILE__ ) ) . '/languages' );
+	load_plugin_textdomain('wpitstats', false, basename( dirname( __FILE__ ) ) . '/languages' );
 
 }
 
 add_action('init', 'wpit_stats_text_domain');
 
+include_once 'inc/class-wpit-messages.php';
 
 
 /**
@@ -55,18 +56,15 @@ class Wpit_Stats {
 	var $option_name = 'wpit-stats-options';
 	var $years_option_name = 'wpit-stats-years-options';
 	var $stats_data;
-
+	var $plugin_version;
+	var $wpit_decimal;
 	private $options;
-
     private $years_option;
-
     private $now;
 
 
 	//A static member variable representing the class instance
 	private static $_instance = null;
-
-
 
 	/**
 	 * Wpit_Stats::__construct()
@@ -79,15 +77,15 @@ class Wpit_Stats {
 
 	private function __construct() {
 
-
-
+		$this->plugin_version = get_option( WPIT_BLOSTA_PLUGIN_VERSION_NAME );
+		$this->wpit_decimal = get_option( 'wpit-decimal' );
 		add_action( 'admin_menu', array( $this, 'add_plugin_page' ) );
         add_action( 'admin_init', array( $this, 'update_check' ) );
         add_action( 'init', array( $this, 'init' ) );
         add_shortcode( 'wpitstats',  array( $this, 'shortcode' ) );
-        add_action( 'admin_init', array( $this, 'save' ) );
         add_action( 'admin_enqueue_scripts', array( $this, 'wpitstats_css' ) );
-	}
+
+    }
 
 	/**
 	 * Wpit_Stats::__clone()
@@ -123,9 +121,7 @@ class Wpit_Stats {
 
 		return self::$_instance;
 
-
 	}
-
 
 	/**
 	 * init function.
@@ -196,8 +192,12 @@ class Wpit_Stats {
 	private function update_plugin(){
 
 		update_option( WPIT_BLOSTA_PLUGIN_VERSION_NAME, WPIT_BLOSTA_PLUGIN_VERSION );
-	}
 
+		if ( true != $this->wpit_decimal ){
+
+			update_option( 'wpit-decimal', false );
+		}
+	}
 
 	/**
 	 * shortcode function. Shortcode to rendere the table stats
@@ -218,10 +218,8 @@ class Wpit_Stats {
 	$render_stats = $this->render_stats( $year );
 
 	return $render_stats;
+
 	}
-
-
-
 
     /**
      * add_plugin_page function.
@@ -242,7 +240,6 @@ class Wpit_Stats {
         add_action( 'admin_head-'. $wpitstats_page, array( $this, 'save' ) );
     }
 
-
     /**
      * create_admin_page function.
      *
@@ -253,7 +250,6 @@ class Wpit_Stats {
      */
     public function create_admin_page(){
 
-
 		//check if years_option is an array and if there is last year
         if ( ( ! is_array( $this->years_option ) ) || ( is_array( $this->years_option ) &&  ! in_array( $this->now - 1, $this->years_option )  ) ){
 
@@ -263,13 +259,22 @@ class Wpit_Stats {
 	        //get new option
 	        $this->years_option = get_option( $this->years_option_name );
 
-
         }
+
+        if ( isset( $_POST['nonce_wpit_stats'] ) &&  wp_verify_nonce( $_POST['nonce_wpit_stats'], 'nonce_wpit_stats' ) &&  $_POST['check_stats'] == 'create_stats' ){
+
+			$data = $this->data();
+
+			update_option( $this->option_name, $data );
+
+			$this->stats_data = get_option( $this->option_name );
+
+			}
 
 		//create the html
         ?>
         <div class="wrap">
-            <h2><?php _e('Wpit Stats Settings - version: ', 'wpitstats' ) ?> <?php echo get_site_option( WPIT_BLOSTA_PLUGIN_VERSION_NAME ); ?></h2>
+            <h2><?php _e('Wpit Stats Settings - version: ', 'wpitstats' ) ?> <?php echo $this->plugin_version ; ?></h2>
             <form method="post" action="">
 	            <?php wp_nonce_field( 'nonce_wpit_stats', 'nonce_wpit_stats' ); ?>
 	            <input type="hidden" id="check_stats" name="check_stats" value="create_stats" />
@@ -277,8 +282,6 @@ class Wpit_Stats {
 
 				//get the stats list, if there are stats, $stats_list['message'] == 1
                 $stats_list = $this->get_stats_list();
-
-
 
                 if ( '1' == $stats_list['message'] ){
 
@@ -327,11 +330,7 @@ class Wpit_Stats {
 
 	                }
 
-                } else {
-
-	                echo __('<h3 class="stats_red">No stats, yet. Please create stats</h3>', 'wpitstats' );
                 }
-
 
                 submit_button( 'Create stats' );
 
@@ -341,7 +340,7 @@ class Wpit_Stats {
 
 	            echo __( '<h3>Help</h3>', 'wpitstats' );
 
-	            echo __( '<p>You can copy the following code and then add to yours CSS theme, to have a reponsive table or copy the sample.css that you can find in the css plugin directory</p>', 'wpitstats' );
+	            echo __( '<p>You can copy the following code and then add to yours CSS theme, to have a responsive table or copy the sample.css that you can find in the css plugin directory</p>', 'wpitstats' );
 
 	            echo '<code>/* div stats table container */</code><br /><code>.table-stats-responsive {width: 98%; padding-left: 10px;}</code><br /><code>/* table stats border style */</code><br /><code>.table-stats-responsive table {border: #ccc solid 1px;}</code><br /><code>/* th and td */</code><br /><code>.table-stats-responsive table td, .table-stats-responsive table th {min-width: 50px; width: 16.5%; border: #ccc solid 1px; word-break: break-all; text-align: center; padding: 1%;}</code>';
 
@@ -441,7 +440,7 @@ class Wpit_Stats {
 		 				<td>' . number_format( $st[tot_posts] ) . '</td>
 		 				<td>' . number_format( $st[avg_posts_length] ) . '</td>
 		 				<td>' . number_format( $st[tot_posts_length] ) . '</td>
-		 				<td>' . number_format( $st[avg_comments_for_post] ) . '</td>
+		 				<td>' . number_format( ( $st[avg_comments_for_post] ), 1 ) . '</td>
 		 				<td>' . number_format( $st[tot_comments] ) . '</td>
 		 			</tr>';
 
@@ -501,8 +500,15 @@ class Wpit_Stats {
 
 			$stats[$y]['tot_posts_length'] =  $wpdb->get_var( $sql );
 
-			$stats[$y]['avg_comments_for_post'] = ceil( $stats[$y]['tot_comments'] / $stats[$y]['tot_posts'] );
+			$stats[$y]['avg_comments_for_post'] = round( ( $stats[$y]['tot_comments'] / $stats[$y]['tot_posts'] ), 1 );
 
+
+		}
+
+		//Delete option wpit-decimal option is set to not-yet
+		if ( false == $this->wpit_decimal ){
+
+			update_option( 'wpit-decimal', true );
 
 		}
 
@@ -525,8 +531,6 @@ class Wpit_Stats {
 		$sql = "SELECT EXTRACT(YEAR from post_date) as year
 		FROM $wpdb->posts  WHERE post_status = 'publish' AND post_type = 'post' GROUP BY year ORDER BY year DESC";
 
-
-
 		$results = $wpdb->get_results( $sql, ARRAY_N );
 
 		$results = $this->remove_array_level( $results );
@@ -542,7 +546,6 @@ class Wpit_Stats {
 		}
 
 		return $results;
-
 
 	}
 
@@ -561,9 +564,7 @@ class Wpit_Stats {
 
 			update_option( $this->years_option_name, $years );
 
-
 		}
-
 
 	}
 
