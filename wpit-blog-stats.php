@@ -4,7 +4,7 @@ Plugin Name: Wpit Blog Stats
 Plugin URI: http://paolovalenti.info/
 Description: Basic stats about your blog
 Author: wolly aka Paolo Valenti
-Version: 1.1
+Version: 1.2
 Author URI: http://paolovalenti.info
 Text Domain: wpitstats
 Domain Path: /languages
